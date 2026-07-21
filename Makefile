@@ -1,8 +1,9 @@
 COMPILER = odin
+ARGS     =
 
 NAME        = Olice
 VERSION     = 0.1.0
-SOURCE_PATH = .
+SOURCE_PATH = src
 OUTPUT_PATH = build
 OUTPUT_NAME = $(OUTPUT_PATH)/$(NAME)
 
@@ -23,7 +24,7 @@ release:
 	@$(COMPILER) build $(SOURCE_PATH) -out=$(OUTPUT_NAME) $(FLAGS_DEFAULT) $(FLAGS_RELEASE)
 
 run: debug
-	@./$(OUTPUT_NAME)
+	@./$(OUTPUT_NAME) $(ARGS)
 
 clean:
 	@rm -rf $(OUTPUT_PATH)
