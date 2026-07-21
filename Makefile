@@ -1,5 +1,5 @@
-COMPILER = odin
-ARGS     =
+ODIN = odin
+ARGS =
 
 NAME        = Olice
 VERSION     = 0.1.0
@@ -17,11 +17,11 @@ all: debug
 
 debug:
 	@mkdir -p $(OUTPUT_PATH)
-	@$(COMPILER) build $(SOURCE_PATH) -out=$(OUTPUT_NAME) $(FLAGS_DEFAULT) $(FLAGS_DEBUG)
+	@$(ODIN) build $(SOURCE_PATH) -out=$(OUTPUT_NAME) $(FLAGS_DEFAULT) $(FLAGS_DEBUG)
 
 release:
 	@mkdir -p $(OUTPUT_PATH)
-	@$(COMPILER) build $(SOURCE_PATH) -out=$(OUTPUT_NAME) $(FLAGS_DEFAULT) $(FLAGS_RELEASE)
+	@$(ODIN) build $(SOURCE_PATH) -out=$(OUTPUT_NAME) $(FLAGS_DEFAULT) $(FLAGS_RELEASE)
 
 run: debug
 	@./$(OUTPUT_NAME) $(ARGS)
