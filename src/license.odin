@@ -32,21 +32,8 @@ LICENSES :: [?]License {
 	},
 }
 
-/*
-license_kind_encode :: proc(kind: License_Kind) -> Maybe(string) {
-	switch kind {
-	case .BlueOak_1_0_0:
-		return "blueoak-1.0.0"
-	case .Bsd_2_Clause_Patent:
-		return "bsd-2-clause-patent"
-	case:
-		return nil
-	}
-}
-*/
-
 @(require_results)
-license_kind_decode :: proc(value: string) -> (License_Kind, License_Error) {
+decode_license :: proc(value: string) -> (License_Kind, License_Error) {
 	lower, err := strings.to_lower(value)
 	if err != .None {
 		return {}, .Failed_To_Lower
@@ -62,4 +49,15 @@ license_kind_decode :: proc(value: string) -> (License_Kind, License_Error) {
 	case:
 		return {}, .Unknown_License
 	}
+}
+
+@(require_results)
+find_license :: proc(kind: License_Kind) -> (License, License_Error) {
+	for license in LICENSES {
+		if license.kind == kind {
+			return license, .None
+		}
+	}
+
+	return {}, .Unknown_License
 }

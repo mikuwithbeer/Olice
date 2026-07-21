@@ -44,7 +44,7 @@ load_interface :: proc(interface: ^Interface, arguments: []string) -> Interface_
 				return .Unknown_Option
 			}
 		case .Identifier:
-			identifier, err := license_kind_decode(argument)
+			identifier, err := decode_license(argument)
 			if err != .None {
 				return .Unknown_Identifier
 			}
