@@ -13,6 +13,7 @@ Writer :: struct {
 	stdout: bool,
 }
 
+@(require_results)
 load_writer :: proc(writer: ^Writer, value: string) -> Writer_Error {
 	file: ^os.File
 	err: os.Error

@@ -10,5 +10,21 @@ main :: proc() {
 		os.exit(1)
 	}
 
-	fmt.println(interface)
+	writer := Writer {
+		target = interface.target,
+		stdout = interface.stdout,
+	}
+
+	for license in LICENSES {
+		if license.kind != interface.identifier {
+			continue
+		}
+
+		if err := load_writer(&writer, license.text); err != .None {
+			fmt.println("err:", err)
+			os.exit(1)
+		}
+
+		break
+	}
 }

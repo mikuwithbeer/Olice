@@ -20,11 +20,15 @@ License :: struct {
 }
 
 LICENSES :: [?]License {
-	License{.BlueOak_1_0_0, "Blue Oak Model License 1.0.0", #load("../text/BLUEOAK-1.0.0")},
 	License {
-		.Bsd_2_Clause_Patent,
-		"BSD-2-Clause Plus Patent License",
-		#load("../text/BSD-2-CLAUSE-PATENT"),
+		kind = .BlueOak_1_0_0,
+		name = "Blue Oak Model License 1.0.0",
+		text = #load("../text/BLUEOAK-1.0.0"),
+	},
+	License {
+		kind = .Bsd_2_Clause_Patent,
+		name = "BSD-2-Clause Plus Patent License",
+		text = #load("../text/BSD-2-CLAUSE-PATENT"),
 	},
 }
 
@@ -41,6 +45,7 @@ license_kind_encode :: proc(kind: License_Kind) -> Maybe(string) {
 }
 */
 
+@(require_results)
 license_kind_decode :: proc(value: string) -> (License_Kind, License_Error) {
 	lower, err := strings.to_lower(value)
 	if err != .None {
