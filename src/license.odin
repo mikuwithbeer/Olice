@@ -5,6 +5,7 @@ import "core:strings"
 License_Kind :: enum {
 	BlueOak_1_0_0,
 	Bsd_2_Clause_Patent,
+	Amazon_Digital_Services,
 }
 
 License_Error :: enum {
@@ -30,6 +31,11 @@ LICENSES :: [?]License {
 		name = "BSD-2-Clause Plus Patent License",
 		text = #load("../text/BSD-2-CLAUSE-PATENT"),
 	},
+	License {
+		kind = .Amazon_Digital_Services,
+		name = "Amazon Digital Services License",
+		text = #load("../text/ADSL"),
+	},
 }
 
 @(require_results)
@@ -46,6 +52,8 @@ decode_license :: proc(value: string) -> (License_Kind, License_Error) {
 		return .BlueOak_1_0_0, .None
 	case "bsd-2-clause-patent":
 		return .Bsd_2_Clause_Patent, .None
+	case "adsl":
+		return .Amazon_Digital_Services, .None
 	case:
 		return {}, .Unknown_License
 	}

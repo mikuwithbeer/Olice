@@ -21,4 +21,9 @@ main :: proc() {
 		fmt.println(encode_error(err))
 		os.exit(1)
 	}
+
+	if !interface.stdout {
+		fmt.printfln("Generated %s and saved to: %s", license.name, interface.target)
+		fmt.printfln("Note: Please review the file, as some licenses require manual updates.")
+	}
 }
