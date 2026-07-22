@@ -16,48 +16,54 @@ Options:
 
 Examples:
   Olice --version
-  Olice -i mit --stdout
-  Olice --identifier blueoak-1.0.0 -t LICENSE.md`
+  Olice -i MIT --stdout
+  Olice --target LICENSE.md`
 
 main :: proc() {
+	exit_code := 1
+
 	interface := make_interface()
 	action, err := load_interface(&interface, os.args)
 	if err != .None {
-		fmt.println(encode_error(err))
-		os.exit(1)
+		print_error(err)
+		os.exit(exit_code)
 	}
 
-	action_result: int
 	switch action {
 	case .Write:
-		action_result = action_write(&interface)
+		exit_code = action_write(&interface)
 	case .Help:
-		action_result = action_help(&interface)
+		exit_code = action_help(&interface)
 	case .List:
-		action_result = action_list(&interface)
+		exit_code = action_list(&interface)
 	case .Version:
-		action_result = action_version(&interface)
+		exit_code = action_version(&interface)
 	}
 
-	os.exit(action_result)
+	os.exit(exit_code)
 }
 
 action_write :: proc(interface: ^Interface) -> int {
 	license, err := find_license(interface.identifier)
 	if err != .None {
-		fmt.println(encode_error(err))
+		print_error(err)
 		return 1
 	}
 
 	writer := make_writer(interface.target, interface.stdout)
 	if err := load_writer(&writer, license.text); err != .None {
-		fmt.println(encode_error(err))
+		print_error(err)
 		return 1
 	}
 
 	if !interface.stdout {
-		fmt.printfln("Generated %s and saved to: %s", license.name, interface.target)
-		fmt.printfln("Note: Please review the file, as some licenses require manual updates.")
+		fmt.printfln(
+			"Generated \e[1;37m%s\e[0m and saved to: \e[1;37m%s\e[0m",
+			license.name,
+			interface.target,
+		)
+
+		fmt.printfln("\e[0;34mNote:\e[0m Please review the file for manual updates.")
 	}
 
 	return 0
@@ -69,12 +75,11 @@ action_help :: proc(interface: ^Interface) -> int {
 }
 
 action_list :: proc(interface: ^Interface) -> int {
-	fmt.println("Here are the available licenses:")
 	for license in LICENSES {
-		kind := encode_license_kind(license.kind)
 		rate := encode_license_rate(license.rate)
+		kind := encode_license_kind(license.kind)
 
-		fmt.printfln("- %s (%s): %s", kind, rate, license.name)
+		fmt.printfln("- (\e[0;33m%s\e[0m) \e[1;37m%s:\e[0m %s", rate, kind, license.name)
 	}
 
 	return 0

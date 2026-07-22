@@ -1,37 +1,49 @@
 package main
 
+import "core:fmt"
+import "core:os"
+
 Error :: union {
 	Interface_Error,
 	License_Error,
 	Writer_Error,
 }
 
-encode_error :: proc(err: Error) -> string {
+print_error :: proc(err: Error) {
+	fmt.fprint(os.stderr, "\e[0;31mError:\e[0m ")
+
 	switch e in err {
 	case Interface_Error:
 		#partial switch e {
 		case .Unknown_Identifier:
-			return "Unrecognized identifier. Please check for typos."
+			fmt.fprintln(os.stderr, "Unrecognized identifier. Please check for typos.")
+			return
 		case .Unknown_Option:
-			return "Unknown option provided. Verify the flag name."
+			fmt.fprintln(os.stderr, "Unknown option provided. Verify the flag name.")
+			return
 		}
 	case License_Error:
 		#partial switch e {
 		case .Failed_To_Lower:
-			return "Failed to lowercase the license string. This is likely an allocator issue."
+			fmt.fprintln(os.stderr, "Failed to lowercase the license string.")
+			return
 		case .Unknown_License:
-			return "Unknown license. Please verify the name and spelling."
+			fmt.fprintln(os.stderr, "Unknown license. Please verify the name and spelling.")
+			return
 		}
 	case Writer_Error:
 		#partial switch e {
 		case .Failed_To_Open:
-			return "Failed to open the file."
+			fmt.fprintln(os.stderr, "Failed to open the file.")
+			return
 		case .Failed_To_Write:
-			return "Failed to write to the file."
+			fmt.fprintln(os.stderr, "Failed to write to the file.")
+			return
 		case .Failed_To_Close:
-			return "Failed to close the file."
+			fmt.fprintln(os.stderr, "Failed to close the file.")
+			return
 		}
 	}
 
-	return "An unexpected error occurred. Please report the issue."
+	fmt.fprintln(os.stderr, "An unexpected error occurred. Please report the issue.")
 }
