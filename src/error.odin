@@ -25,9 +25,11 @@ encode_error :: proc(err: Error) -> string {
 	case Writer_Error:
 		#partial switch e {
 		case .Failed_To_Open:
-			return "Failed to open the file. Check file permissions or lock status."
+			return "Failed to open the file."
 		case .Failed_To_Write:
-			return "Failed to write to the file. Verify available disk space."
+			return "Failed to write to the file."
+		case .Failed_To_Close:
+			return "Failed to close the file."
 		}
 	}
 

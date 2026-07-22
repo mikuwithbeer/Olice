@@ -6,6 +6,7 @@ Writer_Error :: enum {
 	None,
 	Failed_To_Open,
 	Failed_To_Write,
+	Failed_To_Close,
 }
 
 Writer :: struct {
@@ -33,8 +34,18 @@ load_writer :: proc(writer: ^Writer, value: string) -> Writer_Error {
 
 	_, err = os.write_string(file, value)
 	if err != os.ERROR_NONE {
-		return .Failed_To_Write
+		err = os.close(file)
+		if err != os.ERROR_NONE {
+			return .Failed_To_Close
+		} else {
+			return .Failed_To_Write
+		}
 	}
 
-	return .None
+	err = os.close(file)
+	if err != os.ERROR_NONE {
+		return .Failed_To_Close
+	} else {
+		return .None
+	}
 }
