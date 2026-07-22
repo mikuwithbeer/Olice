@@ -72,7 +72,9 @@ action_list :: proc(interface: ^Interface) -> int {
 	fmt.println("Here are the available licenses:")
 	for license in LICENSES {
 		kind := encode_license_kind(license.kind)
-		fmt.printfln("- %s : %s", kind, license.name)
+		rate := encode_license_rate(license.rate)
+
+		fmt.printfln("- %s (%s): %s", kind, rate, license.name)
 	}
 
 	return 0
