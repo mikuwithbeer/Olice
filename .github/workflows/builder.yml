@@ -1,0 +1,48 @@
+name: Olice Builder
+
+on:
+  workflow_call:
+
+jobs:
+  builder:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Project
+        run: make release
+
+      - name: Package Artifacts
+        run: |
+          mkdir -p dist
+          cp build/Olice* dist/
+          cd dist
+
+          ASSET_NAME="Olice-${{ runner.os }}-${{ runner.arch }}"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            7z a -tzip "../$ASSET_NAME.zip" .
+          else
+            tar -czvf "../$ASSET_NAME.tar.gz" .
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.os }}
+          path: Olice-*
