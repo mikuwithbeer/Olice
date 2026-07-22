@@ -7,6 +7,11 @@ SOURCE_PATH = src
 OUTPUT_PATH = build
 OUTPUT_NAME = $(OUTPUT_PATH)/$(NAME)
 
+# Append the .exe extension if on Windows.
+ifeq ($(OS),Windows_NT)
+    OUTPUT_NAME = $(OUTPUT_PATH)/$(NAME).exe
+endif
+
 FLAGS_DEBUG   = -debug
 FLAGS_RELEASE = -o:speed
 FLAGS_DEFAULT = -vet -strict-style -define:VERSION="$(VERSION)"
