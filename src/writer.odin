@@ -19,7 +19,7 @@ make_writer :: proc(target: string, stdout: bool) -> Writer {
 }
 
 @(require_results)
-load_writer :: proc(writer: ^Writer, value: string) -> Writer_Error {
+load_writer :: proc(writer: ^Writer, value: string) -> (result: Writer_Error) {
 	file: ^os.File
 	err: os.Error
 
@@ -32,20 +32,16 @@ load_writer :: proc(writer: ^Writer, value: string) -> Writer_Error {
 		}
 	}
 
-	_, err = os.write_string(file, value)
-	if err != os.ERROR_NONE {
-		err = os.close(file)
-		if err != os.ERROR_NONE {
-			return .Failed_To_Close
-		} else {
-			return .Failed_To_Write
+	defer if !writer.stdout {
+		if err = os.close(file); err != os.ERROR_NONE {
+			result = .Failed_To_Close
 		}
 	}
 
-	err = os.close(file)
+	_, err = os.write_string(file, value)
 	if err != os.ERROR_NONE {
-		return .Failed_To_Close
-	} else {
-		return .None
+		return .Failed_To_Write
 	}
+
+	return .None
 }
