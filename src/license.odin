@@ -28,6 +28,10 @@ License_Kind :: enum {
 	MIT_No_Attribution,
 	Unlicense,
 	Zlib_License,
+	SQLite_Blessing,
+	Fair_License,
+	Good_Luck_With_That,
+	Do_WTF_You_Want_To,
 }
 
 License_Rate :: enum {
@@ -160,6 +164,30 @@ LICENSES :: [?]License {
 		name = "zlib License",
 		text = #load("../text/ZLIB"),
 	},
+	License {
+		kind = .SQLite_Blessing,
+		rate = .Lead,
+		name = "SQLite Blessing",
+		text = #load("../text/BLESSING"),
+	},
+	License {
+		kind = .Fair_License,
+		rate = .Lead,
+		name = "Fair License",
+		text = #load("../text/FAIR"),
+	},
+	License {
+		kind = .Good_Luck_With_That,
+		rate = .Lead,
+		name = "Good Luck With That Public License",
+		text = #load("../text/GLWTPL"),
+	},
+	License {
+		kind = .Do_WTF_You_Want_To,
+		rate = .Lead,
+		name = "Do What The F*ck You Want To Public License",
+		text = #load("../text/WTFPL"),
+	},
 }
 
 @(require_results)
@@ -203,6 +231,14 @@ encode_license_kind :: proc(kind: License_Kind) -> string {
 		return "unlicense"
 	case .Zlib_License:
 		return "zlib"
+	case .SQLite_Blessing:
+		return "blessing"
+	case .Fair_License:
+		return "fair"
+	case .Good_Luck_With_That:
+		return "glwtpl"
+	case .Do_WTF_You_Want_To:
+		return "wtfpl"
 	case:
 		return "unknown"
 	}
@@ -256,6 +292,14 @@ decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 		return .Unlicense, .None
 	case "zlib":
 		return .Zlib_License, .None
+	case "blessing":
+		return .SQLite_Blessing, .None
+	case "fair":
+		return .Fair_License, .None
+	case "glwtpl":
+		return .Good_Luck_With_That, .None
+	case "wtfpl":
+		return .Do_WTF_You_Want_To, .None
 	case:
 		return {}, .Unknown_License
 	}
