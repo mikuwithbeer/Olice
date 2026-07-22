@@ -38,6 +38,8 @@ License_Kind :: enum {
 	GNU_Lesser_General_3_0,
 	Mozilla_Public_2_0,
 	European_Union_Public_1_2,
+	Eclipse_Public_1_0,
+	Eclipse_Public_2_0,
 }
 
 License_Rate :: enum {
@@ -231,6 +233,18 @@ LICENSES :: [?]License {
 		name = "European Union Public License 1.2",
 		text = #load("../text/EUPL-1.2"),
 	},
+	License {
+		kind = .Eclipse_Public_1_0,
+		rate = .Unknown,
+		name = "Eclipse Public License 1.0",
+		text = #load("../text/EPL-1.0"),
+	},
+	License {
+		kind = .Eclipse_Public_2_0,
+		rate = .Unknown,
+		name = "Eclipse Public License 2.0",
+		text = #load("../text/EPL-2.0"),
+	},
 }
 
 @(require_results)
@@ -294,6 +308,10 @@ encode_license_kind :: proc(kind: License_Kind) -> string {
 		return "mpl-2.0"
 	case .European_Union_Public_1_2:
 		return "eupl-1.2"
+	case .Eclipse_Public_1_0:
+		return "epl-1.0"
+	case .Eclipse_Public_2_0:
+		return "epl-2.0"
 	case:
 		return "unknown"
 	}
@@ -367,6 +385,10 @@ decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 		return .Mozilla_Public_2_0, .None
 	case "eupl-1.2":
 		return .European_Union_Public_1_2, .None
+	case "epl-1.0":
+		return .Eclipse_Public_1_0, .None
+	case "epl-2.0":
+		return .Eclipse_Public_2_0, .None
 	case:
 		return {}, .Unknown_License
 	}

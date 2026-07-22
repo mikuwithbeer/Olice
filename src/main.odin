@@ -57,12 +57,7 @@ action_write :: proc(interface: ^Interface) -> int {
 	}
 
 	if !interface.stdout {
-		fmt.printfln(
-			"Generated \e[1;37m%s\e[0m and saved to: \e[1;37m%s\e[0m",
-			license.name,
-			interface.target,
-		)
-
+		fmt.printfln("Saved \e[1;37m%s\e[0m to \e[1;37m%s\e[0m", license.name, interface.target)
 		fmt.printfln("\e[0;34mNote:\e[0m Please review the file for manual updates.")
 	}
 
