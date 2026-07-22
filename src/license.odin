@@ -39,7 +39,21 @@ LICENSES :: [?]License {
 }
 
 @(require_results)
-decode_license :: proc(value: string) -> (License_Kind, License_Error) {
+encode_license_kind :: proc(kind: License_Kind) -> string {
+	switch kind {
+	case .BlueOak_1_0_0:
+		return "blueoak-1.0.0"
+	case .Bsd_2_Clause_Patent:
+		return "bsd-2-clause-patent"
+	case .Amazon_Digital_Services:
+		return "adsl"
+	case:
+		return "unknown"
+	}
+}
+
+@(require_results)
+decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 	lower, err := strings.to_lower(value)
 	if err != .None {
 		return {}, .Failed_To_Lower

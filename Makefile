@@ -9,7 +9,7 @@ OUTPUT_NAME = $(OUTPUT_PATH)/$(NAME)
 
 FLAGS_DEBUG   = -debug
 FLAGS_RELEASE = -o:speed
-FLAGS_DEFAULT = -vet -strict-style
+FLAGS_DEFAULT = -vet -strict-style -define:VERSION="$(VERSION)"
 
 .PHONY: all debug release clean run
 
