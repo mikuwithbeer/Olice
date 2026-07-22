@@ -2,7 +2,7 @@ ODIN = odin
 ARGS =
 
 NAME        = Olice
-VERSION     = 0.1.0
+VERSION     = 0.1.1
 SOURCE_PATH = src
 OUTPUT_PATH = build
 OUTPUT_NAME = $(OUTPUT_PATH)/$(NAME)
