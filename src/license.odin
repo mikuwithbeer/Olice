@@ -32,6 +32,10 @@ License_Kind :: enum {
 	Fair_License,
 	Good_Luck_With_That,
 	Do_WTF_You_Want_To,
+	GNU_Affero_General_3_0,
+	GNU_General_Public_3_0,
+	GNU_General_Public_2_0,
+	GNU_Lesser_General_3_0,
 }
 
 License_Rate :: enum {
@@ -40,6 +44,7 @@ License_Rate :: enum {
 	Silver,
 	Bronze,
 	Lead,
+	Unknown,
 }
 
 License :: struct {
@@ -188,6 +193,30 @@ LICENSES :: [?]License {
 		name = "Do What The F*ck You Want To Public License",
 		text = #load("../text/WTFPL"),
 	},
+	License {
+		kind = .GNU_Affero_General_3_0,
+		rate = .Unknown,
+		name = "GNU Affero General Public License v3.0",
+		text = #load("../text/AGPL-3.0"),
+	},
+	License {
+		kind = .GNU_General_Public_3_0,
+		rate = .Unknown,
+		name = "GNU General Public License v3.0",
+		text = #load("../text/GPL-3.0"),
+	},
+	License {
+		kind = .GNU_General_Public_2_0,
+		rate = .Unknown,
+		name = "GNU General Public License v2.0",
+		text = #load("../text/GPL-2.0"),
+	},
+	License {
+		kind = .GNU_Lesser_General_3_0,
+		rate = .Unknown,
+		name = "GNU Lesser General Public License v3.0",
+		text = #load("../text/LGPL-3.0"),
+	},
 }
 
 @(require_results)
@@ -239,6 +268,14 @@ encode_license_kind :: proc(kind: License_Kind) -> string {
 		return "glwtpl"
 	case .Do_WTF_You_Want_To:
 		return "wtfpl"
+	case .GNU_Affero_General_3_0:
+		return "agpl-3.0"
+	case .GNU_General_Public_3_0:
+		return "gpl-3.0"
+	case .GNU_General_Public_2_0:
+		return "gpl-2.0"
+	case .GNU_Lesser_General_3_0:
+		return "lgpl-3.0"
 	case:
 		return "unknown"
 	}
@@ -300,6 +337,14 @@ decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 		return .Good_Luck_With_That, .None
 	case "wtfpl":
 		return .Do_WTF_You_Want_To, .None
+	case "agpl-3.0":
+		return .GNU_Affero_General_3_0, .None
+	case "gpl-3.0":
+		return .GNU_General_Public_3_0, .None
+	case "gpl-2.0":
+		return .GNU_General_Public_2_0, .None
+	case "lgpl-3.0":
+		return .GNU_Lesser_General_3_0, .None
 	case:
 		return {}, .Unknown_License
 	}
@@ -318,8 +363,10 @@ encode_license_rate :: proc(rate: License_Rate) -> string {
 		return "bronze"
 	case .Lead:
 		return "lead"
-	case:
+	case .Unknown:
 		return "unknown"
+	case:
+		return "none"
 	}
 }
 
