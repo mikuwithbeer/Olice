@@ -20,6 +20,14 @@ License_Kind :: enum {
 	ISC_License,
 	MIT_License,
 	Universal_Permissive_1_0,
+	Bsd_0_Clause,
+	Bsd_3_Clause,
+	Bsd_3_Clause_Clear,
+	Bsd_4_Clause,
+	Creative_Commons_Zero_1_0,
+	MIT_No_Attribution,
+	Unlicense,
+	Zlib_License,
 }
 
 License_Rate :: enum {
@@ -104,6 +112,54 @@ LICENSES :: [?]License {
 		name = "Universal Permissive License v1.0",
 		text = #load("../text/UPL-1.0"),
 	},
+	License {
+		kind = .Bsd_0_Clause,
+		rate = .Bronze,
+		name = "BSD Zero Clause License",
+		text = #load("../text/BSD-0-CLAUSE"),
+	},
+	License {
+		kind = .Bsd_3_Clause,
+		rate = .Bronze,
+		name = "BSD 3-Clause \"New\" or \"Revised\" License",
+		text = #load("../text/BSD-3-CLAUSE"),
+	},
+	License {
+		kind = .Bsd_3_Clause_Clear,
+		rate = .Bronze,
+		name = "BSD 3-Clause Clear License",
+		text = #load("../text/BSD-3-CLAUSE-CLEAR"),
+	},
+	License {
+		kind = .Bsd_4_Clause,
+		rate = .Bronze,
+		name = "BSD 4-Clause \"Original\" or \"Old\" License",
+		text = #load("../text/BSD-4-CLAUSE"),
+	},
+	License {
+		kind = .Creative_Commons_Zero_1_0,
+		rate = .Bronze,
+		name = "Creative Commons Zero v1.0 Universal",
+		text = #load("../text/CC0-1.0"),
+	},
+	License {
+		kind = .MIT_No_Attribution,
+		rate = .Bronze,
+		name = "MIT No Attribution",
+		text = #load("../text/MIT-0"),
+	},
+	License {
+		kind = .Unlicense,
+		rate = .Bronze,
+		name = "The Unlicense",
+		text = #load("../text/UNLICENSE"),
+	},
+	License {
+		kind = .Zlib_License,
+		rate = .Bronze,
+		name = "zlib License",
+		text = #load("../text/ZLIB"),
+	},
 }
 
 @(require_results)
@@ -131,6 +187,22 @@ encode_license_kind :: proc(kind: License_Kind) -> string {
 		return "mit"
 	case .Universal_Permissive_1_0:
 		return "upl-1.0"
+	case .Bsd_0_Clause:
+		return "0bsd"
+	case .Bsd_3_Clause:
+		return "bsd-3-clause"
+	case .Bsd_3_Clause_Clear:
+		return "bsd-3-clause-clear"
+	case .Bsd_4_Clause:
+		return "bsd-4-clause"
+	case .Creative_Commons_Zero_1_0:
+		return "cc0-1.0"
+	case .MIT_No_Attribution:
+		return "mit-0"
+	case .Unlicense:
+		return "unlicense"
+	case .Zlib_License:
+		return "zlib"
 	case:
 		return "unknown"
 	}
@@ -168,6 +240,22 @@ decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 		return .MIT_License, .None
 	case "upl-1.0":
 		return .Universal_Permissive_1_0, .None
+	case "bsd-0-clause", "0bsd":
+		return .Bsd_0_Clause, .None
+	case "bsd-3-clause":
+		return .Bsd_3_Clause, .None
+	case "bsd-3-clause-clear":
+		return .Bsd_3_Clause_Clear, .None
+	case "bsd-4-clause":
+		return .Bsd_4_Clause, .None
+	case "cc0-1.0":
+		return .Creative_Commons_Zero_1_0, .None
+	case "mit-no-attribution", "mit-0":
+		return .MIT_No_Attribution, .None
+	case "unlicense":
+		return .Unlicense, .None
+	case "zlib":
+		return .Zlib_License, .None
 	case:
 		return {}, .Unknown_License
 	}
