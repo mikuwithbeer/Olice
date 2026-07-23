@@ -1,6 +1,7 @@
 package main
 
 import "core:fmt"
+import "core:mem/virtual"
 import "core:os"
 
 OLICE_VERSION :: #config(VERSION, "0.0.0")
@@ -29,6 +30,9 @@ main :: proc() {
 		os.exit(exit_code)
 	}
 
+	arena: virtual.Arena
+	context.allocator = virtual.arena_allocator(&arena)
+
 	switch action {
 	case .Write:
 		exit_code = action_write(&interface)
@@ -40,6 +44,7 @@ main :: proc() {
 		exit_code = action_version(&interface)
 	}
 
+	virtual.arena_destroy(&arena)
 	os.exit(exit_code)
 }
 

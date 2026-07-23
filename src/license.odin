@@ -324,8 +324,6 @@ decode_license_kind :: proc(value: string) -> (License_Kind, License_Error) {
 		return {}, .Failed_To_Lower
 	}
 
-	defer delete(lower)
-
 	switch lower {
 	case "blueoak-1.0.0":
 		return .BlueOak_1_0_0, .None
