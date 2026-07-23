@@ -26,7 +26,7 @@ load_writer :: proc(writer: ^Writer, value: string) -> (result: Writer_Error) {
 	if writer.stdout {
 		file = os.stdout
 	} else {
-		file, err = os.open(writer.target, {.Create, .Write})
+		file, err = os.open(writer.target, {.Create, .Write, .Trunc})
 		if err != os.ERROR_NONE {
 			return .Failed_To_Open
 		}
