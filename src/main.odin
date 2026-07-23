@@ -10,15 +10,19 @@ OLICE_HELP :: `Usage: Olice [OPTIONS]
 Options:
   -i, --identifier <license>  The license identifier to generate (e.g., 'mit', 'apache-2.0').
   -t, --target <file>         Where to save the generated license file (defaults to 'LICENSE').
+  -n, --name <string>         Copyright holder(s) name to include in the license.
+  -y, --year <string>         Copyright year to include in the license.
   -s, --stdout                Print the license to the terminal instead of saving it.
   -l, --list                  Show the menu of all available licenses.
   -v, --version               Print the current version.
   -h, --help                  Show this helpful message.
 
 Examples:
-  Olice --version
-  Olice -i MIT --stdout
-  Olice --target LICENSE.md`
+  Olice --list
+  Olice -i Apache-2.0
+  Olice -i MIT --name "John Doe" --year 2026
+  Olice -i BlueOak-1.0.0 --target LICENSE.md
+  Olice -i 0BSD --stdout`
 
 main :: proc() {
 	exit_code := 1

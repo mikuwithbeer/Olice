@@ -59,7 +59,10 @@ Run `Olice --help` or `Olice -h` to view the full help menu.
 Olice --list
 
 # Generate a license in the current directory
-Olice -i MIT
+Olice -i Apache-2.0
+
+# Generate a license with copyright information
+Olice -i MIT --name "Jane Doe" --year "2025-2026"
 
 # Generate a license and write it to a custom file
 Olice -i BlueOak-1.0.0 -f LICENSE.md
