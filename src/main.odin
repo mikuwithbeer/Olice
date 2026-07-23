@@ -8,12 +8,12 @@ OLICE_VERSION :: #config(VERSION, "0.0.0")
 OLICE_HELP :: `Usage: Olice [OPTIONS]
 
 Options:
-  -i, --ident, --identifier <license>  The license identifier to generate (e.g., 'mit', 'apache-2.0').
-  -t, --target <file>                  Where to save the generated license file (defaults to 'LICENSE').
-  -s, --stdout                         Print the license to the terminal instead of saving it.
-  -l, --list                           Show the menu of all available licenses.
-  -v, --version                        Print the current version.
-  -h, --help                           Show this helpful message.
+  -i, --identifier <license>  The license identifier to generate (e.g., 'mit', 'apache-2.0').
+  -t, --target <file>         Where to save the generated license file (defaults to 'LICENSE').
+  -s, --stdout                Print the license to the terminal instead of saving it.
+  -l, --list                  Show the menu of all available licenses.
+  -v, --version               Print the current version.
+  -h, --help                  Show this helpful message.
 
 Examples:
   Olice --version

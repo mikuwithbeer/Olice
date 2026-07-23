@@ -53,7 +53,7 @@ load_interface :: proc(
 		switch interface.state {
 		case .Default:
 			switch argument {
-			case "-i", "--ident", "--identifier":
+			case "-i", "--identifier":
 				interface.state = .Identifier
 			case "-t", "--target":
 				interface.state = .Target
