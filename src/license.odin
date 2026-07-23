@@ -58,6 +58,9 @@ License :: struct {
 	text: string,
 }
 
+LICENSE_TEMPLATE_NAME :: "<COPYRIGHT HOLDER(S)>"
+LICENSE_TEMPLATE_YEAR :: "<YEAR>"
+
 LICENSES :: [?]License {
 	License {
 		kind = .BlueOak_1_0_0,
@@ -421,4 +424,12 @@ find_license :: proc(kind: License_Kind) -> (License, License_Error) {
 	}
 
 	return {}, .Unknown_License
+}
+
+@(require_results)
+fill_license :: proc(license: ^License, name: string, year: string) -> string {
+	first, _ := strings.replace_all(license.text, LICENSE_TEMPLATE_NAME, name)
+	second, _ := strings.replace_all(first, LICENSE_TEMPLATE_YEAR, year)
+
+	return second
 }

@@ -10,6 +10,8 @@ Interface_State :: enum {
 	Default,
 	Identifier,
 	Target,
+	Name,
+	Year,
 }
 
 Interface_Action :: enum {
@@ -23,6 +25,8 @@ Interface :: struct {
 	state:      Interface_State,
 	identifier: License_Kind,
 	target:     string,
+	name:       string,
+	year:       string,
 	stdout:     bool,
 	help:       bool,
 	list:       bool,
@@ -34,6 +38,8 @@ make_interface :: proc() -> Interface {
 		state = .Default,
 		identifier = .BlueOak_1_0_0,
 		target = "LICENSE",
+		name = LICENSE_TEMPLATE_NAME,
+		year = LICENSE_TEMPLATE_YEAR,
 		stdout = false,
 		help = false,
 		list = false,
@@ -57,6 +63,10 @@ load_interface :: proc(
 				interface.state = .Identifier
 			case "-t", "--target":
 				interface.state = .Target
+			case "-n", "--name":
+				interface.state = .Name
+			case "-y", "--year":
+				interface.state = .Year
 			case "-s", "--stdout":
 				interface.stdout = true
 			case "-h", "--help":
@@ -79,6 +89,12 @@ load_interface :: proc(
 		case .Target:
 			interface.state = .Default
 			interface.target = argument
+		case .Name:
+			interface.state = .Default
+			interface.name = argument
+		case .Year:
+			interface.state = .Default
+			interface.year = argument
 		}
 	}
 

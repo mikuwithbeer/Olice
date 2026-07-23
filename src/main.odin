@@ -55,8 +55,10 @@ action_write :: proc(interface: ^Interface) -> int {
 		return 1
 	}
 
+	text := fill_license(&license, interface.name, interface.year)
+
 	writer := make_writer(interface.target, interface.stdout)
-	if err := load_writer(&writer, license.text); err != .None {
+	if err := load_writer(&writer, text); err != .None {
 		print_error(err)
 		return 1
 	}
